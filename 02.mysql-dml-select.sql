@@ -115,5 +115,73 @@ SELECT CONCAT(first_name, ' ', last_name) AS name,
 FROM employees
 WHERE hire_date > '2008-01-01';
 
--- 급여가 14000이하이거나 17000이상인 사원의 이름과 급여
+-- 급여가 10000미만이거나 17000초과인 사원의 이름과 급여
+SELECT CONCAT(first_name, ' ', last_name) AS name,
+	salary
+FROM employees
+WHERE salary < 10000 OR
+	salary > 17000;
+    
+-- 급여가 10000이상이고 17000이하인 사원의 이름과 급여
+SELECT CONCAT(first_name, ' ', last_name) AS name,
+	salary
+FROM employees
+WHERE salary >= 10000 AND
+	salary <= 17000;
+-- BETWEEN 연산자
+SELECT CONCAT(first_name, ' ', last_name) AS name,
+	salary
+FROM employees
+WHERE salary BETWEEN 10000 AND 17000;
 
+-- IN 연산자 
+-- 10, 20, 30번 부서에 소속된 직원 정보
+SELECT employee_id, first_name, department_id
+FROM employees
+WHERE department_id = 10 OR
+	department_id = 20 OR
+    department_id = 30;
+    
+SELECT employee_id, first_name, department_id
+FROM employees
+WHERE department_id IN (10, 20, 30);
+
+-- 10, 20, 30부서가 아닌 부서에 소속된 직원들
+SELECT employee_id, first_name, department_id
+FROM employees
+WHERE department_id <> 10 AND
+	department_id != 20 AND
+    department_id <> 30;
+    
+SELECT employee_id, first_name, department_id
+FROM employees
+WHERE department_id NOT IN (10, 20, 30);
+
+-- WHERE 절에서 null 체크
+-- IS NULL로 체크
+-- = null 불가
+SELECT first_name, commission_pct
+FROM employees
+WHERE commission_pct IS NULL;	-- = null로 하면 안됨
+
+SELECT first_name, commission_pct
+FROM employees
+WHERE commission_pct = NULL;	-- 잘못된 NULL 체크
+
+--------------------
+-- LIKE 
+--------------------
+-- 부분 문자열 검색
+-- Wildcard
+-- % : 정해지지 않은 길이의 문자열
+-- _ : 문자 1개
+
+-- 이름에 am을 포함한 사원의 이름과 급여
+SELECT first_name, salary
+FROM employees
+WHERE LOWER(first_name) LIKE "%am%";
+
+-- 이름의 두번째 글자가 a인 사원의 이름과 급여
+SELECT first_name, salary
+FROM employees
+WHERE LOWER(first_name) LIKE "_a%";
