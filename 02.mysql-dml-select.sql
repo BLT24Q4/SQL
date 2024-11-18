@@ -198,3 +198,42 @@ ORDER BY department_id ASC;	-- ASC는 생략 가능(기본값)
 -- 정렬 기준은 여러 컬럼에 지정할 수 있음
 SELECT * FROM employees
 ORDER BY first_name, hire_date DESC LIMIT 10;
+
+-- 급여가 15000 이하인 직원들 중에서 목록을 급여의 내림차순으로 출력
+SELECT * FROM employees
+WHERE salary <= 15000
+ORDER BY salary DESC;
+
+-- 부서 번호를 오름차순으로 정렬하고
+-- 같은 부서 사람들은 급여가 높은 사람부터 
+-- 이름, 부서번호, 급여 출력
+SELECT first_name, department_id, salary
+FROM employees
+ORDER BY department_id, salary DESC;
+
+--------------------
+-- 문자열 단일행 함수
+--------------------
+SELECT first_name, last_name,
+	CONCAT(first_name, ' ', last_name),
+    LOWER(first_name), LCASE(first_name),
+    UPPER(first_name), UCASE(first_name)
+FROM employees;
+
+SELECT '    MySQL    ',
+	"*****Database****"
+FROM DUAL;
+
+SELECT LTRIM('     MySQL     ') AS "LTRIM",
+	RTRIM('     MySQL     ') AS "RTRIM",
+    TRIM(BOTH '*' FROM "*****Database****") AS "TRIM",
+    TRIM(LEADING '*' FROM "*****Database****")
+		AS 'LEADING TRIM',
+	TRIM(TRAILING '*' FROM "*****Database****")
+		AS 'TRAILING TRIM'
+FROM DUAL;
+
+SELECT "Oracle Database",
+	LENGTH("Oracle Database"),	-- 1 Base
+    SUBSTRING("Oracle Database", 8, 4)
+FROM DUAL;
