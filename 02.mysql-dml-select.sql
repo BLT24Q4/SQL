@@ -56,3 +56,64 @@ SELECT salary, ISNULL(salary * NULL)
 FROM employees;
 SELECT salary, NOT ISNULL(salary * NULL)
 FROM employees;
+
+-- 
+SELECT first_name, salary, salary * 12 AS 연봉
+FROM employees;
+-- 커미션까지 포함한 최종 급여
+SELECT first_name, salary, commission_pct,
+	salary + salary * commission_pct 최종급여
+FROM employees;
+
+-- COALESCE or IFNULL
+-- COALESCE (ANSI-SQL) : 주어진 인수 중, NULL이 아닌 첫 값
+SELECT coalesce(NULL, NULL, "A", "B");
+
+-- IFNULL (MySQL) : 두개의 인수 중 첫 값이 NULL이면 두번째 값
+
+SELECT IFNULL(NULL, "대체값");
+
+SELECT first_name,
+	salary, commission_pct,
+    salary + salary * IFNULL(commission_pct, 0)
+FROM employees;
+
+SELECT first_name,
+	salary, commission_pct,
+    salary + salary * COALESCE(commission_pct, 0)
+FROM employees;
+
+-- FULL Name과 salary
+SELECT first_name + " " + last_name, salary
+FROM employees;
+-- 문자열을 합칠때는 concat 함수를 사용
+SELECT CONCAT(first_name, " ", last_name) AS 이름
+FROM employees;
+
+-- DISTINCT
+SELECT job_id FROM employees;	-- 107개
+SELECT DISTINCT job_id FROM employees; -- 19개
+
+------------------
+-- WHERE
+------------------
+-- SELECTION을 위한 조건
+
+-- 부서 번호가 10번이 부서 정보
+SELECT * FROM departments;
+
+SELECT * FROM departments
+WHERE department_id = 10;
+
+-- 급여가 15000이상인 사원의 목록을 출력
+SELECT * FROM employees
+WHERE salary >= 15000;
+
+-- 입사일이 2008-01-01 이후인 사원들의 이름과 입사일을 출력
+SELECT CONCAT(first_name, ' ', last_name) AS name,
+	hire_date AS "입사일"
+FROM employees
+WHERE hire_date > '2008-01-01';
+
+-- 급여가 14000이하이거나 17000이상인 사원의 이름과 급여
+
