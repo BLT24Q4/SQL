@@ -235,5 +235,73 @@ FROM DUAL;
 
 SELECT "Oracle Database",
 	LENGTH("Oracle Database"),	-- 1 Base
-    SUBSTRING("Oracle Database", 8, 4)
+    SUBSTRING("Oracle Database", 8, 4),
+    SUBSTRING("Oracle Database", -8, 8) --	음수 인덱싱
 FROM DUAL;
+
+SELECT
+	REPLACE("Sad Day", "Sad", "Happy"),
+    LPAD(first_name, 20, '*'),
+    RPAD(first_name, 20, '*')
+FROM employees;
+
+--------------------
+-- 수치형 단일행 함수
+--------------------
+SELECT ABS(-3.14),	-- 절대값
+	CEILING(3.14),	-- 소수점을 올림 (천정)
+    FLOOR(3.14),	-- 소수점을 버림 (바닥)
+    MOD(7, 3),		-- 나눗셈의 나머지
+    POWER(2,4),		--	제곱
+    ROUND(3.5),		--	반올림
+    ROUND(3.56, 1),	--	반올림 (소수점 1자리까지)
+    TRUNCATE(3.56, 1)	--	내림 (소수점 1자리까지)
+FROM dual;
+
+SELECT SIGN(-10),
+	SIGN(0),
+    SIGN(10),
+    GREATEST(2, 1, 0),
+    GREATEST(4.0, 5.0, 3.0),
+    GREATEST('B', 'A', 'C'),
+    LEAST(2, 1, 0),
+    LEAST(4.0, 5.0, 3.0),
+    LEAST('B', 'A', 'C')
+FROM DUAL;
+
+--------------------
+-- 날짜형 단일행 함수
+--------------------
+
+SELECT CURDATE(), CURRENT_DATE,
+	CURTIME(), CURRENT_TIME,
+    CURRENT_TIMESTAMP,
+    NOW(), SYSDATE()
+FROM DUAL;
+
+-- EXTRACT 함수: 날짜 혹은 시간에서 특정 요소 추출
+SELECT EXTRACT(YEAR FROM '2024-11-18') FROM DUAL;
+
+-- 모든 직원들의 입사년도 조회
+SELECT first_name, 
+	hire_date, 
+	EXTRACT(YEAR FROM hire_date) AS 입사년도
+FROM employees;
+
+-- 2008년 이후 입사한 직원 목록 출력
+SELECT first_name, hire_date,
+	EXTRACT(YEAR FROM hire_date) AS hire_year
+FROM employees
+WHERE EXTRACT(YEAR FROM hire_date) >= 2008;
+
+-- DATE_FORMAT : 날짜 출력 형식 지정
+SELECT DATE_FORMAT(CURDATE(), '%W %M %Y'),
+	DATE_FORMAT(CURDATE(), '%Y. %m. %d')
+FROM DUAL;
+
+-- PERIOD_DIFF : 두 날짜 정보 사이의 간격값을 반환
+-- 직원들이 지금까지 몇 개월 근속했는가?
+SELECT first_name,
+	DATE_FORMAT(CURDATE(), '%Y%m') AS 현재시간,
+    DATE_FORMAT(hire_date, '%Y%m') AS 입사일
+FROM employees;
