@@ -303,5 +303,22 @@ FROM DUAL;
 -- 직원들이 지금까지 몇 개월 근속했는가?
 SELECT first_name,
 	DATE_FORMAT(CURDATE(), '%Y%m') AS 현재시간,
-    DATE_FORMAT(hire_date, '%Y%m') AS 입사일
+    DATE_FORMAT(hire_date, '%Y%m') AS 입사일,
+    PERIOD_DIFF(DATE_FORMAT(CURDATE(), '%Y%m'), 
+				DATE_FORMAT(hire_date, '%Y%m')) 
+                AS 근속월수
 FROM employees;
+
+-- DATE_ADD, DATE_SUB : 특정 간격을 더하거나 뺄 수 있다
+SELECT first_name, hire_date,
+	DATE_ADD(hire_date, INTERVAL 1 YEAR),
+    DATE_SUB(hire_date, INTERVAL 1 YEAR)
+FROM employees;
+
+-- CAST : 변환
+SELECT CAST(now() AS DATE);
+SELECT CAST("123" AS UNSIGNED);	--	문자열 -> unsigned int
+
+-- CONVER 함수로 대신할 수 있음
+SELECT CONVERT(now(), DATE) FROM DUAL;
+SELECT CONVERT("123", UNSIGNED) FROM DUAL;
