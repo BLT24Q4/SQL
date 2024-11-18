@@ -185,3 +185,16 @@ WHERE LOWER(first_name) LIKE "%am%";
 SELECT first_name, salary
 FROM employees
 WHERE LOWER(first_name) LIKE "_a%";
+
+--------------------
+-- ORDER BY
+--------------------
+
+-- 부서 번호를 오름차순으로 정렬하고 이름, 부서번호, 급여 출력
+SELECT first_name, department_id, salary
+FROM employees
+ORDER BY department_id ASC;	-- ASC는 생략 가능(기본값)
+
+-- 정렬 기준은 여러 컬럼에 지정할 수 있음
+SELECT * FROM employees
+ORDER BY first_name, hire_date DESC LIMIT 10;
