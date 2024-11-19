@@ -130,4 +130,17 @@ ORDER BY LENGTH(department_name) DESC;
 */
 SELECT UPPER(country_name) AS country_name
 FROM countries
-ORDER BY UPPER(county_name) ASC;
+ORDER BY UPPER(country_name) ASC;
+
+/*
+문제10.
+입사일이 03/12/31 일 이전 입사한 
+직원의 이름, 월급, 전화 번호, 입사일을 출력하세요
+전화번호는 545-343-3433 과 같은 형태로 출력하시오.
+*/
+SELECT first_name,
+	salary,
+    REPLACE(phone_number, '.', '-') AS phone_number,
+    hire_date
+FROM employees
+WHERE hire_date <= '03/12/31';
