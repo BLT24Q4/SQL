@@ -16,6 +16,7 @@ FROM employees AS emp INNER JOIN departments AS dept
 		ON emp.department_id = dept.department_id
 ORDER BY dept.department_name, emp.employee_id DESC;
 
+
 /*
 문제2.
 employees 테이블의 job_id는 현재의 업무아이디를 가지고 있습니다
@@ -238,4 +239,6 @@ FROM employees emp
 	INNER JOIN departments dept
 		ON emp.department_id = dept.department_id
 	INNER JOIN employees man
-		ON emp.manager_id = man.employee_id;
+		ON emp.manager_id = man.employee_id
+ORDER BY emp.employee_id;
+        
