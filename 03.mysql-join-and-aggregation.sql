@@ -60,4 +60,67 @@ SELECT CONCAT(first_name, ' ', last_name) AS full_name,
 FROM employees emp, departments dept
 WHERE emp.department_id 
 	= dept.department_id;	-- 106
-	
+    
+SELECT CONCAT(first_name, ' ', last_name) AS full_name,
+	emp.department_id,
+    dept.department_id,
+    department_name
+FROM employees emp JOIN departments dept
+					USING (department_id); -- 조인 조건 필드
+
+--------------------
+-- OUTER JOIN
+--------------------
+-- 조건이 만족하는 짝이 없는 경우에도 NULL을 포함하여 결과를 출력
+-- 모든결과를 표현할 테이블이 어느 위치에 있느냐에 따라
+-- LEFT, RIGHT, FULL OUTER 조인으로 구분 
+
+--------------------
+-- LEFT OUTER JOIN
+--------------------
+SELECT first_name,
+	emp.department_id,
+    dept.department_id,
+    department_name
+FROM employees emp LEFT OUTER JOIN departments dept
+						ON emp.department_id =
+							dept.department_id;
+
+--------------------
+-- RIGHT OUTER JOIN
+--------------------
+SELECT first_name,
+	emp.department_id,
+    dept.department_id,
+    department_name
+FROM employees emp RIGHT OUTER JOIN departments dept
+						ON emp.department_id =
+							dept.department_id;
+                            
+--------------------
+-- FULL OUTER JOIN
+--------------------
+-- MySQL은 FULL OUTER JOIN을 지원하지 않음
+-- LEFT JOIN 결과와 RIGHT JOIN 결과를 UNION 연산해서
+-- FULL OUTER JOIN을 구현할 수 있음
+SELECT
+	employee_id,
+    CONCAT(first_name, ' ', last_name) AS full_name,
+    emp.department_id,
+    dept.department_id,
+    department_name
+FROM
+	employees emp LEFT OUTER JOIN departments dept
+					ON emp.department_id =
+						dept.department_id
+UNION
+SELECT
+	employee_id,
+    CONCAT(first_name, ' ', last_name) AS full_name,
+    emp.department_id,
+    dept.department_id,
+    department_name
+FROM
+	employees emp RIGHT OUTER JOIN departments dept
+					ON emp.department_id =
+						dept.department_id;
