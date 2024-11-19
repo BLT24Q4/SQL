@@ -1,3 +1,4 @@
+-- Practice01. Select Basics
 /*
 전체직원의 다음 정보를 조회하세요. 
 정렬은 입사일(hire_date)의 오름차순(ASC)으로 
