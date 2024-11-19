@@ -124,3 +124,29 @@ FROM
 	employees emp RIGHT OUTER JOIN departments dept
 					ON emp.department_id =
 						dept.department_id;
+                        
+--------------------
+-- SELF JOIN
+--------------------
+-- 자기 자신과 JOIN
+-- 자기 자신을 두번 이상 호출하므로, 별칭을 사용할 수 밖에 없음
+SELECT emp.employee_id,
+	emp.first_name,
+    emp.manager_id,
+    man.employee_id,
+    man.first_name
+FROM 
+	employees emp JOIN employees man
+				ON emp.manager_id = man.employee_id;
+
+SELECT * FROM employees;
+
+SELECT emp.employee_id,
+	emp.first_name,
+    emp.manager_id,
+    man.employee_id,
+    man.first_name
+FROM employees emp
+	LEFT OUTER JOIN employees man
+		ON emp.manager_id = man.employee_id;
+
