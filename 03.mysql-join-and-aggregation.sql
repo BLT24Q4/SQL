@@ -232,3 +232,27 @@ FROM employees						-- (1)
 GROUP BY department_id				-- (2)
 	HAVING AVG(salary) >= 7000		-- (3)
 ORDER BY department_id;				-- (4)
+
+--------------------
+-- SUBQUERY
+--------------------
+
+-- Susan보다 많은 급여를 받은 직원의 목록
+
+-- Query 1. 이름이 Susan인 직원의 급여를 뽑는 쿼리
+SELECT salary FROM employees
+WHERE first_name='Susan';	-- 6500
+
+-- Query 2. 급여를 6500보다 많이 받는 직원의 목록을 뽑는 쿼리
+SELECT first_name, salary
+FROM employees
+WHERE salary > 6500;
+
+-- 쿼리의 결합
+SELECT first_name, salary
+FROM employees
+WHERE salary > (SELECT salary FROM employees
+				WHERE first_name='Susan');
+                
+-- TODO: 연습문제
+-- 'Den'보다 급여를 많이 받는 사원의 이름과 급여를 출력
