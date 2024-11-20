@@ -150,3 +150,8 @@ FROM employees emp
 	LEFT OUTER JOIN employees man
 		ON emp.manager_id = man.employee_id;
 
+--------------------
+-- Aggregation (집계)
+--------------------
+-- 여러 행의 데이터를 입력으로 받아서 하나의 행을 반환
+-- NULL이 포함된 데이터는 NULL을 제외하고 집계
