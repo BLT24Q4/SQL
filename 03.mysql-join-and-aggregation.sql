@@ -256,3 +256,63 @@ WHERE salary > (SELECT salary FROM employees
                 
 -- TODO: 연습문제
 -- 'Den'보다 급여를 많이 받는 사원의 이름과 급여를 출력
+
+-- 급여를 가장 적게 받는 사람의 이름, 급여, 사원번호를 출력
+
+-- Query 1. 가장 적은 급여
+SELECT MIN(salary) FROM employees; -- 2100
+-- Query 2. Query 1의 결과보다 salary가 작은 직원 목록
+SELECT employee_id, first_name, salary
+FROM employees
+WHERE salary = 2100;
+
+-- 결합
+SELECT employee_id, first_name, salary
+FROM employees
+WHERE salary = (SELECT MIN(salary) FROM employees);
+
+-- 평균 급여보다 적게 받는 사원의 이름과 급여
+-- Query 1. 평균 급여 쿼리
+SELECT AVG(salary) FROM employees;	--	6462
+
+-- Query 2. Query 1의 결과보다 salary가 적은 사람의 목록
+SELECT employee_id, first_name, salary
+FROM employees
+WHERE salary < 6462;
+
+-- 결합
+SELECT employee_id, first_name, salary
+FROM employees
+WHERE salary < (SELECT AVG(salary) FROM employees);
+
+-- 다중행 서브쿼리
+-- 서브쿼리의 결과 레코드가 둘 이상일 때는 단순비교연산자는 사용 불가
+-- 서브쿼리의 결과가 둘 이상일 때는
+-- 집합 연산자 (IN, ANY, ALL, EXISTS 등을 사용해야 한다)
+
+SELECT salary FROM employees WHERE department_id = 110;
+
+-- 110 번 부서 사람들이 받는 급여와 동일한 급여를 받는 사원들
+SELECT first_name, salary
+FROM employees
+WHERE salary IN (SELECT salary 
+				FROM employees
+                WHERE department_id = 110);
+                
+-- 110번 부서 사람들이 받는 급여중 1개 이상보다 많은 급여를 받는 사람들                
+SELECT first_name, salary
+FROM employees
+WHERE salary > ANY (SELECT salary 
+				FROM employees
+                WHERE department_id = 110);
+-- ANY 연산자 비교연산자와 결합해서 작동
+-- OR 연산자와 비슷
+
+-- 110번 부서 사람들이 받는 급여 전체보다 많은 급여를 받는 직원 목록
+SELECT first_name, salary
+FROM employees
+WHERE salary > ALL (SELECT salary 
+				FROM employees
+                WHERE department_id = 110);
+-- ALL 연산자: 비교연산자와 결합하여 사용
+-- AND 연산자와 비슷                
