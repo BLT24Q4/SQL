@@ -226,3 +226,9 @@ GROUP BY department_id;	--	Error! Why?
 -- 집계 함수 실행 이전에 Where 절을 이용한 Selection이 이루어짐
 -- 집계 함수는 WHERE 절에서 활용할 수 없는 상태
 -- 집계 이후에 조건 검사를 하려면 HAVING 절을 활용
+
+SELECT department_id, AVG(salary)	-- (5)
+FROM employees						-- (1)
+GROUP BY department_id				-- (2)
+	HAVING AVG(salary) >= 7000		-- (3)
+ORDER BY department_id;				-- (4)
