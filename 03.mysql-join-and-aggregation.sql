@@ -316,3 +316,49 @@ WHERE salary > ALL (SELECT salary
                 WHERE department_id = 110);
 -- ALL 연산자: 비교연산자와 결합하여 사용
 -- AND 연산자와 비슷                
+
+-- 서브쿼리 연습
+-- 각 부서별로 최고 급여를 받는 사원을 출력 (조건절에 서브쿼리 사용)
+-- Query 1. 각 부서의 최고 급여
+SELECT department_id, MAX(salary) salary
+FROM employees
+GROUP BY department_id
+ORDER BY department_id;
+
+-- Query 2. Query 1에서 나온 department_id, salary값을 이용
+-- 비교 연산
+SELECT department_id,
+	employee_id, first_name, salary
+FROM employees 
+WHERE (department_id, salary) IN
+	(SELECT department_id, MAX(salary)
+		FROM employees
+        GROUP BY department_id)
+ORDER BY department_id;
+
+
+-- 각 부서별로 최고 급여를 받는 사원을 출력 (서브쿼리 테이블 조인 사용)
+SELECT emp.department_id, emp.employee_id,
+	emp.first_name, emp.salary
+FROM employees emp JOIN 
+	(SELECT department_id, MAX(salary)
+		FROM employees
+        GROUP BY department_id) sal
+	ON emp.department_id = sal.department_id
+ORDER BY emp.department_id;
+
+
+--------------------
+-- LIMIT
+--------------------
+-- LIMIT : 출력 개수의 제한
+SELECT first_name, salary FROM employees
+ORDER BY salary DESC
+LIMIT 3;	--	앞으로부터 3개
+
+SELECT first_name, salary FROM employees
+ORDER BY salary DESC
+LIMIT 10, 3;	--	앞에서 10개 건너뛰고 3개만 출력
+
+SELECT first_name, salary FROM employees
+ORDER BY salary DESC;
