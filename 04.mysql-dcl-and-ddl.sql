@@ -154,3 +154,68 @@ SHOW CREATE TABLE book;
 
 -- RENAME
 RENAME TABLE book TO article;
+
+-- 주요 제약 조건(Constraints)
+CREATE TABLE book (
+	book_id INTEGER NOT NULL);	
+INSERT INTO book VALUES(1);
+INSERT INTO book VALUES(NULL);
+-- NOT NULL : 컬럼 레벨 제약 조건
+
+DROP TABLE book;
+-- UNIQUE
+CREATE TABLE book (
+	book_id INTEGER,
+    UNIQUE(book_id));
+    
+INSERT INTO book VALUES(1);
+INSERT INTO book VALUES(2);
+INSERT INTO book VALUES(2);	-- ERROR
+-- UNIQUE : 유일한 값, 테이블 레벨, 인덱스 자동 부여
+DROP TABLE book;
+
+-- PK
+CREATE TABLE book (
+	book_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    book_title VARCHAR(100));
+    
+INSERT INTO book (book_title) VALUES ('홍길동전');
+INSERT INTO book (book_title) VALUES ('전우치전');
+INSERT INTO book (book_title) VALUES ('춘향전');
+
+SELECT * FROM book;
+-- PRIMARY KEY : NOT NULL + UNIQUE -> 자동 인덱스
+DROP TABLE book;
+
+-- CHECK
+CREATE TABLE book (
+	rate INTEGER CHECK (rate IN (1, 2, 3, 4, 5))
+);
+
+INSERT INTO book VALUES(1);
+INSERT INTO book VALUES(6);	-- Error: 체크 조건에 위배
+
+DROP TABLE book;
+
+-- 제약조건 포함 book 테이블 생성
+CREATE TABLE book (
+	book_id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT '도서 아이디',
+    book_title VARCHAR(50) NOT NULL COMMENT '도서 제목',
+    author VARCHAR(20) NOT NULL COMMENT '작가명',
+    rate INTEGER CHECK (rate IN (1, 2, 3, 4, 5)) COMMENT '별점',
+    pub_date DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '출간일')
+    COMMENT '도서 정보';
+    
+-- AUTHOR 테이블 생성
+CREATE TABLE author (
+	author_id INTEGER PRIMARY KEY COMMENT '작가 아이디',
+    author_name VARCHAR(100) NOT NULL COMMENT '작가 이름',
+    author_desc VARCHAR(256) COMMENT '작가 설명')
+    COMMENT '작가 정보';
+    
+-- book 테이블의 author 컬럼 삭제
+-- -> author_id (FK) -> author.author_id 참조
+ALTER TABLE book DROP author;
+
+-- book 테이블의 book_title 뒤에 author_id 추가
+ALTER TABLE book ADD author_id INTEGER AFTER book_title;
