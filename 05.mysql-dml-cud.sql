@@ -36,3 +36,5 @@ SELECT * FROM author;
 DELETE FROM author WHERE author_id=3;
 
 SELECT * FROM author;
+
+SHOW CREATE TABLE author;

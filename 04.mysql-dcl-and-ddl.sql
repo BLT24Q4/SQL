@@ -233,7 +233,7 @@ DROP TABLE book;
 CREATE TABLE book (
 	book_id INTEGER PRIMARY KEY COMMENT '도서 아이디',
     book_title VARCHAR(50) NOT NULL COMMENT '도서 제목',
-    author_id INTEGER,
+    author_id INTEGER COMMENT '작가 테이블 참조',
     rate INTEGER CHECK(rate IN (1, 2, 3, 4, 5)) COMMENT '별점',
     pub_date DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '출간일',
     FOREIGN KEY (author_id) REFERENCES
