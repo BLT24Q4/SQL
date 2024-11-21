@@ -31,3 +31,8 @@ WHERE author_id=2;
 SELECT * FROM author;
 
 -- 주의: UPDATE, DELETE는 WHERE절을 이용 변경 조건을 부여해야 한다
+
+-- DELETE
+DELETE FROM author WHERE author_id=3;
+
+SELECT * FROM author;
