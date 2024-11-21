@@ -219,3 +219,23 @@ ALTER TABLE book DROP author;
 
 -- book 테이블의 book_title 뒤에 author_id 추가
 ALTER TABLE book ADD author_id INTEGER AFTER book_title;
+
+-- FOREIGN KEY 추가
+ALTER TABLE book ADD CONSTRAINT c_book_fk
+	FOREIGN KEY (author_id) REFERENCES author(author_id)
+		ON DELETE SET NULL;
+        
+SHOW CREATE TABLE book;
+
+DROP TABLE book;
+
+-- 테이블 생성 시점에 Constraints 부여
+CREATE TABLE book (
+	book_id INTEGER PRIMARY KEY COMMENT '도서 아이디',
+    book_title VARCHAR(50) NOT NULL COMMENT '도서 제목',
+    author_id INTEGER,
+    rate INTEGER CHECK(rate IN (1, 2, 3, 4, 5)) COMMENT '별점',
+    pub_date DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '출간일',
+    FOREIGN KEY (author_id) REFERENCES
+		author(author_id) ON DELETE SET NULL
+) COMMENT '도서 정보';
