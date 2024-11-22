@@ -54,3 +54,41 @@ CREATE TABLE transactions(
 	log varchar(100), 
     logdate DATETIME default now()
 );
+
+START TRANSACTION;
+
+INSERT INTO transactions (log) VALUES ('1번째 INSERT');
+SELECT * FROM transactions;
+
+INSERT INTO transactions (log) VALUES ('2번째 INSERT');
+SELECT * FROM transactions;
+
+-- 세이브포인트 설정
+SAVEPOINT x1;
+SELECT * FROM transactions;
+
+INSERT INTO transactions (log) VALUES ('3번째 INSERT');
+SELECT * FROM transactions;
+
+ROLLBACK TO x1;
+SELECT * FROM transactions;
+
+-- 트랜잭션 진행중
+
+-- 변경 사항 반영
+COMMIT;
+SELECT * FROM transactions;
+
+START TRANSACTION;
+
+DELETE FROM transactions;
+SELECT * FROM transactions;
+
+ROLLBACK;
+SELECT * FROM transactions;
+
+-- TRUNCATE는 Transaction의 대상이 아니다
+TRUNCATE TABLE transactions;
+
+-- safe update 원상 복구
+SELECT * FROM transactions;
