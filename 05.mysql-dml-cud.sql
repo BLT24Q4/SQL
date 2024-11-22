@@ -38,3 +38,19 @@ DELETE FROM author WHERE author_id=3;
 SELECT * FROM author;
 
 SHOW CREATE TABLE author;
+
+-- Transaction
+-- Workbench 보호 장치 해제
+-- EDIT > PREFERENCES
+-- 	> SQL Editor > Safe Update 해제
+-- Workbench 재시작
+
+SELECT @@autocommit;	-- 1: 오토커밋 ON, 0: 오토커밋 OFF
+
+SET autocommit=0;	--	autocommit off
+
+CREATE TABLE transactions(	
+	id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	log varchar(100), 
+    logdate DATETIME default now()
+);
