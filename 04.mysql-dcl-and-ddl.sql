@@ -246,5 +246,6 @@ DROP TABLE author;
 CREATE TABLE author (
 	author_id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT '작가 아이디',
     author_name VARCHAR(100) NOT NULL COMMENT '작가 이름',
-    author_desc VARCHAR(256) COMMENT '작가 설명')
+    author_desc VARCHAR(256) COMMENT '작가 설명',
+    regdate DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '작가 정보 등록일')
     COMMENT '작가 정보';
